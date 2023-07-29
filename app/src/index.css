@@ -49,3 +49,10 @@
   font-weight: bold;
   margin: 25px 0;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}

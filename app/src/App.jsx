@@ -1,7 +1,7 @@
 // https://dummyjson.com/products?limit=10
 
 import { useEffect, useState } from "react";
-
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
 function App() {
   const [products, setProducts] = useState([]);
   const [pageNum, setPageNum] = useState(1);
@@ -29,6 +29,23 @@ function App() {
               </div>
             );
           })}
+        </div>
+      )}
+      {products.length > 0 && (
+        <div className="pagination">
+          <span className="arrow">
+            <BsFillCaretLeftFill />
+          </span>
+          {[...Array(products.length / 10)].map((_, index) => {
+            return (
+              <span className="number" key={index}>
+                {index + 1}
+              </span>
+            );
+          })}
+          <span className="arrow">
+            <BsFillCaretRightFill />
+          </span>
         </div>
       )}
     </div>
