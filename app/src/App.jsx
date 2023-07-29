@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [pageNum, setPageNum] = useState(1);
 
   async function fetchProducts() {
-    const res = await fetch(`https://dummyjson.com/products?limit=10`);
+    const res = await fetch(`https://dummyjson.com/products?limit=100`);
     const data = await res.json();
     if (data && data.products) setProducts(data.products);
     console.log(products);
@@ -20,7 +21,7 @@ function App() {
     <div>
       {products.length > 0 && (
         <div className="products">
-          {products.map((product) => {
+          {products.slice(pageNum * 10 - 10, pageNum * 10).map((product) => {
             return (
               <div key={product.id} className="product">
                 <img src={product.thumbnail} alt="" />
