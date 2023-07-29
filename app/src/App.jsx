@@ -5,11 +5,17 @@ import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
 function App() {
   const [products, setProducts] = useState([]);
   const [pageNum, setPageNum] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   async function fetchProducts() {
-    const res = await fetch(`https://dummyjson.com/products?limit=100`);
+    const res = await fetch(
+      `https://dummyjson.com/products?limit=10&skip=${pageNum * 10 - 10}`
+    );
     const data = await res.json();
-    if (data && data.products) setProducts(data.products);
+    if (data && data.products) {
+      setProducts(data.products);
+      setTotalPages(data.total / 10);
+    }
     console.log(products);
   }
 
@@ -19,13 +25,13 @@ function App() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [pageNum]);
 
   return (
     <div>
       {products.length > 0 && (
         <div className="products">
-          {products.slice(pageNum * 10 - 10, pageNum * 10).map((product) => {
+          {products.map((product) => {
             return (
               <div key={product.id} className="product">
                 <img src={product.thumbnail} alt="" />
@@ -42,7 +48,7 @@ function App() {
               <BsFillCaretLeftFill />
             </span>
           )}
-          {[...Array(products.length / 10)].map((_, index) => {
+          {[...Array(totalPages)].map((_, index) => {
             return (
               <span
                 onClick={() => selectPageHandler(index + 1)}
@@ -53,7 +59,7 @@ function App() {
               </span>
             );
           })}
-          {pageNum < products.length / 10 && (
+          {pageNum < totalPages && (
             <span className="arrow" onClick={() => setPageNum(pageNum + 1)}>
               <BsFillCaretRightFill />
             </span>
