@@ -13,6 +13,10 @@ function App() {
     console.log(products);
   }
 
+  function selectPageHandler(page) {
+    setPageNum(page);
+  }
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -38,7 +42,11 @@ function App() {
           </span>
           {[...Array(products.length / 10)].map((_, index) => {
             return (
-              <span className="number" key={index}>
+              <span
+                onClick={() => selectPageHandler(index + 1)}
+                className="number"
+                key={index}
+              >
                 {index + 1}
               </span>
             );
