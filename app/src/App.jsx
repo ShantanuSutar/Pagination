@@ -37,23 +37,27 @@ function App() {
       )}
       {products.length > 0 && (
         <div className="pagination">
-          <span className="arrow">
-            <BsFillCaretLeftFill />
-          </span>
+          {pageNum > 1 && (
+            <span className="arrow" onClick={() => setPageNum(pageNum - 1)}>
+              <BsFillCaretLeftFill />
+            </span>
+          )}
           {[...Array(products.length / 10)].map((_, index) => {
             return (
               <span
                 onClick={() => selectPageHandler(index + 1)}
-                className="number"
+                className={pageNum === index + 1 ? "number active" : "number"}
                 key={index}
               >
                 {index + 1}
               </span>
             );
           })}
-          <span className="arrow">
-            <BsFillCaretRightFill />
-          </span>
+          {pageNum < products.length / 10 && (
+            <span className="arrow" onClick={() => setPageNum(pageNum + 1)}>
+              <BsFillCaretRightFill />
+            </span>
+          )}
         </div>
       )}
     </div>
